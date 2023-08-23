@@ -21,3 +21,13 @@ function Pokemon(){
     }
 
 }
+
+export const showPokemon = (pokemonList) => {
+    const body = document.querySelector(".poke-card");
+
+    pokemonList.forEach(pokemon => {
+        const myH5 = document.createElement("h5");
+        myH5.textContent = pokemon;
+        body.appendChild(myH5);
+    });
+};

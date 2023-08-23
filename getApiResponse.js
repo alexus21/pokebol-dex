@@ -1,3 +1,6 @@
+import {showPokemon} from "./main.js";
+import {cardCreator} from "./cardCreator.js";
+
 function getApiResponse(pokemon) {
     const url = "https://pokeapi.co/api/v2/pokemon/" + pokemon;
 
@@ -31,7 +34,9 @@ function getPokemonList() {
 getPokemonList()
     .then(data => {
         const names = data.results.map(pokemon => pokemon.name);
-        return getApiResponse(names[0]);
+        // console.log(names);
+        cardCreator(names);
+        // return getApiResponse(names[0]);
     })
     .then(pokemonData => {
         console.log(pokemonData); // Imprimir información del primer Pokémon

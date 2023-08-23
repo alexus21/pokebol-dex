@@ -1,0 +1,8 @@
+body, html{
+    width: 100vw;
+    height: 100vh;
+}
+
+.poke-card{
+    width: 18rem;
+}
