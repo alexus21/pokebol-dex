@@ -11,21 +11,23 @@
 <body>
 <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
     <section class="container-fluid">
-        <img src="pokemon-icon-file-4.png" width="50">
+        <form action="" class="d-flex">
+            <button class="btn" data-logo><img src="pokemon-icon-file-4.png" width="50"></button>
+        </form>
         <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <input class="form-control me-2" type="search" placeholder="Buscar un pokemon" aria-label="Search" data-input>
+            <button class="btn btn-outline-success" data-search-pokemon-btn>Buscar</button>
         </form>
     </section>
 </nav>
 <main class="row p-5 d-flex justify-content-center">
-    <p class="fs-1">PokeList</p>
+    <p class="fs-1 pt-5">PokeList</p>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script src="main.js" type="module" defer></script>
 <script src="getApiResponse.js" type="module"></script>
 <script src="cardCreator.js" type="module"></script>
 <script src="getPokemonGeneralInfo.js" type="module"></script>
-
+<script src="searchBar.js"></script>
 </body>
 </html>
