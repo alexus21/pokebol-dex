@@ -13,3 +13,7 @@ body, html{
     width: 18rem;
     padding: 0;
 }
+
+.btn-color:hover {
+    font-weight: 500;
+}
