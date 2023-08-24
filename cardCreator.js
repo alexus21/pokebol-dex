@@ -14,7 +14,7 @@ export const cardCreator = (pokeData) => {
         // Crear un encabezado para el nombre del Pokémon.
         const myH5 = document.createElement("h5");
         myH5.classList.add("card-title");
-        myH5.textContent = pokemon;
+        myH5.textContent = pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
 
         // Crear un botón para ver más detalles del Pokémon.
         const myButton = document.createElement("button");
@@ -23,7 +23,7 @@ export const cardCreator = (pokeData) => {
 
         // Agregar la imagen del Pokémon.
         const myImg = document.createElement("img");
-        myImg.src = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + (index + 1) + ".png"; // Incrementar el índice en 1
+        myImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`; // Incrementar el índice en 1
         myImg.classList.add("card-img-top");
         myImg.alt = "Imagen de " + pokemon;
 
