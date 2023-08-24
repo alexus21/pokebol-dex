@@ -1,3 +1,5 @@
+
+
 function Pokemon(){
 
     const showPokemonSpecies = function (){
@@ -16,18 +18,12 @@ function Pokemon(){
         return "Tipo: ";
     }
 
-    const showPokemonStatistics = function (){
-        return "Habilidades: ";
+    const showPokemonStats = function (){
+        return "Stats: ";
+    }
+
+    const showPokemonMoves = function (){
+        return "Movimientos: ";
     }
 
 }
-
-export const showPokemon = (pokemonList) => {
-    const body = document.querySelector(".poke-card");
-
-    pokemonList.forEach(pokemon => {
-        const myH5 = document.createElement("h5");
-        myH5.textContent = pokemon;
-        body.appendChild(myH5);
-    });
-};
