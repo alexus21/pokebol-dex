@@ -1,6 +1,8 @@
-import {cardCreator} from "./cardCreator.js";
-import {getSpecies, getHeight, getWeight, getType, getAbilities, getStats, getMoves} from "./getPokemonGeneralInfo.js";
+import { cardCreator } from "./cardCreator.js";
+// Importar todo de golpe y darle un nombre:
+import * as pokemonInfo from "./getPokemonGeneralInfo.js";
 
+// Obtiene la lista de los primeros 150 Pokémon.
 function getPokemonList() {
     const pokemonNumber = 150;
 
@@ -18,49 +20,45 @@ function getPokemonList() {
 getPokemonList()
     .then(data => {
         const names = data.results.map(pokemon => pokemon.name);
-        // console.log(names);
-        cardCreator(names);
-        // showPokemonInfo(names);
+        cardCreator(names); // Crear y mostrar tarjetas de Pokémon
+        showPokemonInfo(names);
+        return names; // Pasar los nombres de los Pokémon al siguiente then
     })
-    .then(pokemonData => {
-        console.log(pokemonData); // Imprimir información del primer Pokémon
+    .then(pokeData => {
+        showPokemonInfo(pokeData); // Mostrar información detallada de un Pokémon
     })
     .catch(error => console.log("Error: ", error));
 
-
+// Muestra información de un Pokémon.
 const showPokemonInfo = (pokeData) => {
-    const pokemon = pokeData[7];
+    const pokemon = pokeData[7]; // Cambiar el índice para mostrar información de otro Pokémon
 
-    getSpecies(pokemon)
+    pokemonInfo.getSpecies(pokemon)
         .then(data => console.log("Especie: ", data.species.name))
         .catch(error => console.error("Error al obtener la especie:", error));
 
-    getHeight(pokemon)
-        .then(data => console.log("Altura: ", data.height*10, "cm"))
-        .catch(error => console.error("Error al obtener la especie:", error));
+    pokemonInfo.getHeight(pokemon)
+        .then(data => console.log("Altura: ", data.height * 10, "cm"))
+        .catch(error => console.error("Error al obtener la altura:", error));
 
-    getWeight(pokemon)
+    pokemonInfo.getWeight(pokemon)
         .then(data => console.log("Peso: ", data.weight, "lb"))
-        .catch(error => console.error("Error al obtener la especie:", error));
+        .catch(error => console.error("Error al obtener el peso:", error));
 
-    getType(pokemon)
+    pokemonInfo.getType(pokemon)
         .then(data => console.log("Tipo: ", data.types[0].type.name))
-        .catch(error => console.error("Error al obtener la especie:", error));
+        .catch(error => console.error("Error al obtener el tipo:", error));
 
-    // getAbilities(pokemon)
-    //     .then(data => console.log("Habilidades: ", data.abilities[0].ability.name, ", ", data.abilities[1].ability.name, ))
-    //     .catch(error => console.error("Error al obtener la especie:", error));
-
-    getAbilities(pokemon)
+    pokemonInfo.getAbilities(pokemon)
         .then(data => {
             console.log("Habilidades: ");
             data.abilities.forEach(ability => {
                 console.log("\t", ability.ability.name);
             });
         })
-        .catch(error => console.error("Error al obtener la especie:", error));
+        .catch(error => console.error("Error al obtener las habilidades:", error));
 
-    getStats(pokemon)
+    pokemonInfo.getStats(pokemon)
         .then(data => {
             console.log("Stats:");
             data.stats.forEach(stat => {
@@ -69,12 +67,12 @@ const showPokemonInfo = (pokeData) => {
         })
         .catch(error => console.error("Error al obtener las estadísticas:", error));
 
-    getMoves(pokemon)
-            .then(data => {
-                console.log("Moves:");
-                data.moves.forEach(move => {
-                    console.log("\t", move.move.name);
-                });
-            })
-            .catch(error => console.error("Error al obtener las estadísticas:", error));
+    pokemonInfo.getMoves(pokemon)
+        .then(data => {
+            console.log("Moves:");
+            data.moves.forEach(move => {
+                console.log("\t", move.move.name);
+            });
+        })
+        .catch(error => console.error("Error al obtener los movimientos:", error));
 };

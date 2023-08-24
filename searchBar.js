@@ -24,7 +24,6 @@ searchPokemonBtn.addEventListener("click", function (event){
         }
 
         if (pokemonName.includes(pokemonToSearch)) {
-            alert("¡Encontrado!");
             section.scrollIntoView();
             found = true; // Se encontró un Pokémon, establecer la variable a true
             break; // Salir del ciclo una vez que se encuentra un Pokémon
@@ -33,6 +32,6 @@ searchPokemonBtn.addEventListener("click", function (event){
 
     if (!found && pokemonToSearch !== "") {
         alert("No encontrado");
+        input.value = "";
     }
 });
-
