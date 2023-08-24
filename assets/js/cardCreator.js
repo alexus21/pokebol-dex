@@ -1,4 +1,5 @@
 import { getType } from "./getPokemonGeneralInfo.js";
+import { getSpecies } from "./getPokemonGeneralInfo.js";
 
 //Función encargada de crear una card para cada Pokémon
 export const cardCreator = (pokeData) => {
@@ -91,28 +92,58 @@ const getTypeColor = (type) => {
 
 export const showModalInfo = (pokemon, index) => {
     showPokemonName(pokemon);
-    showPokemonPicture(index);
+    showPokemonPicture(index, pokemon);
+    // getPokemonAboutInfo(pokemon);
 }
 
+// const showPokemonName = (pokemon) => {
+//     const myHeaderArticle = document.querySelector(".modal-header");
+//     // myHeaderArticle.style.backgroundColor = getTypeColor(getType(pokemon));
+//     const pokemonType = data.types[0].type.name;
+//     const typeColor = getTypeColor(pokemonType);
+//     myHeaderArticle.style.backgroundColor = typeColor;
+
+//     // Verificar si ya existe un elemento previo
+//     const currentItem = myHeaderArticle.querySelector(".modal-title");
+//     if (currentItem) {
+//         myHeaderArticle.removeChild(currentItem);
+//     }
+
+//     const myH5 = document.createElement("h5");
+//     myH5.classList.add("modal-title", "fs-5");
+//     myH5.textContent = pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
+
+//     myHeaderArticle.appendChild(myH5);
+// };
+
 const showPokemonName = (pokemon) => {
-    const myHeaderArticle = document.querySelector(".modal-header");
-    myHeaderArticle.style.backgroundColor = getTypeColor(getType(pokemon));
+    getType(pokemon)
+    .then(data => {
+        const myHeaderArticle = document.querySelector(".modal-header");
+        const pokemonType = data.types[0].type.name;
+        const typeColor = getTypeColor(pokemonType);
+        myHeaderArticle.style.backgroundColor = typeColor;
 
-    // Verificar si ya existe un elemento previo
-    const currentItem = myHeaderArticle.querySelector(".modal-title");
-    if (currentItem) {
-        myHeaderArticle.removeChild(currentItem);
-    }
+        // Verificar si ya existe un elemento previo
+        const currentItem = myHeaderArticle.querySelector(".modal-title");
+        if (currentItem) {
+            myHeaderArticle.removeChild(currentItem);
+        }
 
-    const myH5 = document.createElement("h5");
-    myH5.classList.add("modal-title", "fs-5");
-    myH5.textContent = pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
+        const myH5 = document.createElement("h5");
+        myH5.classList.add("modal-title", "fs-5");
+        myH5.textContent = pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
 
-    myHeaderArticle.appendChild(myH5);
+        myHeaderArticle.appendChild(myH5);
+    })
+    .catch(error => {
+        console.error("Error al obtener el tipo:", error);
+    });
 };
 
-const showPokemonPicture = (index) => {
+const showPokemonPicture = (index, pokemon) => {
     const myBodyArticle = document.querySelector(".modal-body");
+    myBodyArticle.classList.add("text-center", "d-flex", "flex-column", "align-items-center"); // centrar imagen de pokemon
 
     // Verificar si ya existe un elemento previo
     const currentElement = myBodyArticle.querySelector(".modal-picture");
@@ -120,11 +151,79 @@ const showPokemonPicture = (index) => {
         myBodyArticle.removeChild(currentElement);
     }
 
+    // Eliminar botones anteriores
+    const buttonsContainer = document.querySelector(".information-buttons");
+    if (buttonsContainer) {
+        myBodyArticle.removeChild(buttonsContainer);
+    }
+
     // Agregar la imagen del Pokémon.
     const myImg = document.createElement("img");
     myImg.classList.add("modal-picture");
     myImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`; // Incrementar el índice en 1
     myImg.classList.add("card-img-top");
+    myImg.style.width = "200px";
+    myImg.style.height = "200px";
 
     myBodyArticle.appendChild(myImg);
+    
+    const informationButtons = ["About", "Base Stats", "Evolution", "Moves"];
+    const buttonsContainer1 = document.createElement("div");
+    buttonsContainer1.classList.add("information-buttons");
+    // buttonsContainer.classList.add("d-flex", "align-items-center"); // Aplicar flex-direction column y centrar elementos horizontalmente
+
+    // Crear un elemento <p> para mostrar información
+    const p = document.createElement("p");
+    
+    informationButtons.forEach(buttonName => {
+        const myButton = document.createElement("button");
+        myButton.classList.add("btn", "m-3", "btn-color");
+        myButton.style.border = "none";
+        myButton.textContent = buttonName;
+        
+        
+        // if (buttonName === "About") {
+        //     // Obtener la especie del Pokémon y mostrarla en el elemento <p>
+        //     getSpecies(pokemon)
+        //     .then(data => {
+        //         const pokemonSpecie = data.species.name;
+        //         p.innerText = `Especie: ${pokemonSpecie}`;
+        //     })
+        //     .catch(error => {
+        //         console.error("Error al obtener la especie:", error);
+        //     });
+        // }
+        
+        buttonsContainer1.appendChild(myButton);
+        if (buttonName === "About") {
+            myButton.addEventListener("click", () => {
+                const aboutInfo = getPokemonAboutInfo(pokemon);
+                p.innerText = aboutInfo;
+            });
+        }
+        buttonsContainer1.appendChild(p);
+    });
+
+    myBodyArticle.appendChild(buttonsContainer1);
+};
+
+const getPokemonAboutInfo = (pokemon) => {
+    // try {
+    //     const data =  getSpecies(pokemon);
+    //     const pokemonSpecie = data.species.name;
+        
+    //     // Puedes agregar más información aquí
+    //     return `Especie: ${pokemonSpecie}`;
+    //     // return aboutInfo;
+    // } catch (error) {
+    //     console.error("Error al obtener la información 'About':", error);
+    //     return "No se pudo obtener la información"; 
+    // }
+    getSpecies(pokemon).then(data => {
+        const pokemonSpecie = data.species.name;
+        return `Especie: ${pokemonSpecie}`;
+    }).catch(error => {
+        console.error("Error al obtener la especie:", error);
+        return "No se pudo obtener la informacion";
+    });
 };
