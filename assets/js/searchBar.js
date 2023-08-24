@@ -1,9 +1,11 @@
-import {showModalInfo} from "./cardCreator.js";
+import {showPokemonName, showPokemonPicture} from "./cardCreator.js";
 
 const logoBtn = document.querySelector("[data-logo]");
 const searchPokemonBtn = document.querySelector("[data-search-pokemon-btn]");
+const modalInfo = document.querySelector("#modalInfo"); // Obtener la referencia al modal
 
 logoBtn.addEventListener("click", function (){
+    event.preventDefault();
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 });
@@ -27,7 +29,12 @@ searchPokemonBtn.addEventListener("click", function (event){
 
         if (pokemonName.includes(pokemonToSearch)) {
             section.scrollIntoView();
-            showModalInfo(pokemonToSearch, index);
+            section.classList.add("found-card");
+
+            document.querySelector("[data-close-button]").addEventListener("click", function (){
+                section.classList.remove("found-card");
+            });
+
             found = true; // Se encontró un Pokémon, establecer la variable a true
             break; // Salir del ciclo una vez que se encuentra un Pokémon
         }

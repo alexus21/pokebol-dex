@@ -89,12 +89,7 @@ const getTypeColor = (type) => {
     return typeColors[type] || "#A8A8A8"; // Color gris si no es encontrado
 }
 
-export const showModalInfo = (pokemon, index) => {
-    showPokemonName(pokemon);
-    showPokemonPicture(index);
-}
-
-const showPokemonName = (pokemon) => {
+export const showPokemonName = (pokemon) => {
     const myHeaderArticle = document.querySelector(".modal-header");
     myHeaderArticle.style.backgroundColor = getTypeColor(getType(pokemon));
 
@@ -111,7 +106,7 @@ const showPokemonName = (pokemon) => {
     myHeaderArticle.appendChild(myH5);
 };
 
-const showPokemonPicture = (index) => {
+export const showPokemonPicture = (index) => {
     const myBodyArticle = document.querySelector(".modal-body");
 
     // Verificar si ya existe un elemento previo
@@ -128,3 +123,5 @@ const showPokemonPicture = (index) => {
 
     myBodyArticle.appendChild(myImg);
 };
+
+
