@@ -1,3 +1,5 @@
+import {showModalInfo} from "./cardCreator.js";
+
 const logoBtn = document.querySelector("[data-logo]");
 const searchPokemonBtn = document.querySelector("[data-search-pokemon-btn]");
 
@@ -9,23 +11,23 @@ logoBtn.addEventListener("click", function (){
 searchPokemonBtn.addEventListener("click", function (event){
     event.preventDefault(); // Detener el comportamiento predeterminado del botón de enviar
     const input = document.querySelector("[data-input]");
-    const h5Elements = document.querySelectorAll(".card-title");
+    const h5Elements = Array.from(document.querySelectorAll(".card-title")); // Convertir NodeList a Array
     const pokemonToSearch = input.value.toLowerCase();
 
     let found = false; // Variable para verificar si se encontró un Pokémon
 
-    for (const title of h5Elements) {
+    for (const [index, title] of h5Elements.entries()) { // Usar entries() para obtener índice y valor
         const pokemonName = title.textContent.toLowerCase();
         const section = title.closest(".poke-card");
 
-        if(pokemonToSearch === ""){
+        if (pokemonToSearch === "") {
             alert("Ingresa el nombre del pokemon a buscar");
             break; // Salir del ciclo si no se ingresó un nombre
         }
 
         if (pokemonName.includes(pokemonToSearch)) {
-            alert("¡Encontrado!");
             section.scrollIntoView();
+            showModalInfo(pokemonToSearch, index);
             found = true; // Se encontró un Pokémon, establecer la variable a true
             break; // Salir del ciclo una vez que se encuentra un Pokémon
         }
@@ -33,6 +35,6 @@ searchPokemonBtn.addEventListener("click", function (event){
 
     if (!found && pokemonToSearch !== "") {
         alert("No encontrado");
+        input.value = "";
     }
 });
-
