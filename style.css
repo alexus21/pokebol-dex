@@ -11,4 +11,5 @@ body, html{
 
 .poke-card{
     width: 18rem;
+    padding: 0;
 }

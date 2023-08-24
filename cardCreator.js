@@ -1,3 +1,5 @@
+import { getType } from "./getPokemonGeneralInfo.js";
+
 //Función encargada de crear una card para cada Pokémon
 export const cardCreator = (pokeData) => {
     const main = document.querySelector("main");
@@ -28,6 +30,19 @@ export const cardCreator = (pokeData) => {
         myImg.classList.add("card-img-top");
         myImg.alt = "Imagen de " + pokemon;
 
+        // Obtener el tipo del Pokémon
+        getType(pokemon)
+        .then(data => {
+            const pokemonType = data.types[0].type.name;
+            const typeColor = getTypeColor(pokemonType);
+            myArticle.style.backgroundColor = typeColor;
+        })
+        .catch(error => {
+            console.error("Error al obtener el tipo:", error);
+            // Si ocurre un error, se podría establecer un color por defecto
+            myArticle.style.backgroundColor = "#A8A8A8";
+        });
+
         // Agregar los elementos al article.
         myArticle.appendChild(myH5);
         myArticle.appendChild(myImg);
@@ -40,3 +55,29 @@ export const cardCreator = (pokeData) => {
         main.appendChild(mySection);
     });
 };
+
+
+const getTypeColor = (type) => {
+    const typeColors = {
+        normal: "#A8A77A",
+        fire: "#EE8130",
+        water: "#6390F0",
+        electric: "#F7D02C",
+        grass: "#7AC74C",
+        ice: "#96D9D6",
+        fighting: "#C22E28",
+        poison: "#A33EA1",
+        ground: "#E2BF65",
+        flying: "#A98FF3",
+        psychic: "#F95587",
+        bug: "#A6B91A",
+        rock: "#B6A136",
+        ghost: "#735797",
+        dragon: "#6F35FC",
+        dark: "#705746",
+        steel: "#B7B7CE",
+        fairy: "#D685AD"
+    };
+    
+    return typeColors[type] || "#A8A8A8"; // Color gris si no es encontrado
+}
