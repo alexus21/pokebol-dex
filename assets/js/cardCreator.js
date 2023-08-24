@@ -8,6 +8,7 @@ export const cardCreator = (pokeData) => {
         // Crear una nueva sección para la tarjeta de Pokémon.
         const mySection = document.createElement("section");
         mySection.classList.add("card", "poke-card", "m-1");
+        mySection.setAttribute("id", `infoModal-${index}`);
 
         // Crear un artículo para el contenido de la tarjeta.
         const myArticle = document.createElement("article");
@@ -22,6 +23,12 @@ export const cardCreator = (pokeData) => {
         // Crear un botón para ver más detalles del Pokémon.
         const myButton = document.createElement("button");
         myButton.classList.add("btn", "btn-primary");
+        myButton.setAttribute("data-bs-toggle", "modal"); // Atributo de Bootstrap para activar el modal
+        myButton.setAttribute("data-bs-target", "#modalInfo"); // ID del modal
+        myButton.addEventListener("click", function () {
+            showPokemonName(pokemon);
+            showPokemonPicture(index);
+        });
         myButton.textContent = "Ver detalles";
 
         // Agregar la imagen del Pokémon.
@@ -81,3 +88,43 @@ const getTypeColor = (type) => {
     
     return typeColors[type] || "#A8A8A8"; // Color gris si no es encontrado
 }
+
+export const showModalInfo = (pokemon, index) => {
+    showPokemonName(pokemon);
+    showPokemonPicture(index);
+}
+
+const showPokemonName = (pokemon) => {
+    const myHeaderArticle = document.querySelector(".modal-header");
+    myHeaderArticle.style.backgroundColor = getTypeColor(getType(pokemon));
+
+    // Verificar si ya existe un elemento previo
+    const currentItem = myHeaderArticle.querySelector(".modal-title");
+    if (currentItem) {
+        myHeaderArticle.removeChild(currentItem);
+    }
+
+    const myH5 = document.createElement("h5");
+    myH5.classList.add("modal-title", "fs-5");
+    myH5.textContent = pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
+
+    myHeaderArticle.appendChild(myH5);
+};
+
+const showPokemonPicture = (index) => {
+    const myBodyArticle = document.querySelector(".modal-body");
+
+    // Verificar si ya existe un elemento previo
+    const currentElement = myBodyArticle.querySelector(".modal-picture");
+    if (currentElement) {
+        myBodyArticle.removeChild(currentElement);
+    }
+
+    // Agregar la imagen del Pokémon.
+    const myImg = document.createElement("img");
+    myImg.classList.add("modal-picture");
+    myImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`; // Incrementar el índice en 1
+    myImg.classList.add("card-img-top");
+
+    myBodyArticle.appendChild(myImg);
+};

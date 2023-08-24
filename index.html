@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pokebol-dex</title>
-    <link rel="shortcut icon" href="pokemon-icon-file-4.png">
+    <link rel="shortcut icon" href="assets/img/pokemon-icon-file-4.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
     <section class="container-fluid">
         <form action="" class="d-flex">
-            <button class="btn" data-logo><img src="pokemon-icon-file-4.png" width="50"></button>
+            <button class="btn" data-logo><img src="assets/img/pokemon-icon-file-4.png" width="50"></button>
         </form>
         <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Buscar un pokemon" aria-label="Search" data-input>
@@ -22,12 +22,28 @@
 </nav>
 <main class="row p-5 d-flex justify-content-center">
     <p class="fs-1 pt-5">PokeList</p>
+
+    <section class="modal fade" id="modalInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <article class="modal-dialog">
+            <article class="modal-content">
+                <article class="modal-header">
+<!--                    Nombre del Pokemon acá-->
+                </article>
+                <article class="modal-body">
+<!--                    Imagen del Pokemon acá-->
+                </article>
+                <article class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </article>
+            </article>
+        </article>
+    </section>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-<script src="main.js" type="module" defer></script>
-<script src="getApiResponse.js" type="module"></script>
-<script src="cardCreator.js" type="module"></script>
-<script src="getPokemonGeneralInfo.js" type="module"></script>
-<script src="searchBar.js"></script>
+<script src="assets/js/main.js" type="module" defer></script>
+<script src="assets/js/getApiResponse.js" type="module"></script>
+<script src="assets/js/cardCreator.js" type="module"></script>
+<script src="assets/js/getPokemonGeneralInfo.js" type="module"></script>
+<script src="assets/js/searchBar.js" type="module" defer></script>
 </body>
 </html>
