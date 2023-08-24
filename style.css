@@ -3,6 +3,12 @@ body, html{
     height: 100vh;
 }
 
+.navbar{
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
 .poke-card{
     width: 18rem;
 }

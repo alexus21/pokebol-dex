@@ -20,7 +20,7 @@ getPokemonList()
         const names = data.results.map(pokemon => pokemon.name);
         // console.log(names);
         cardCreator(names);
-        showPokemonInfo(names);
+        // showPokemonInfo(names);
     })
     .then(pokemonData => {
         console.log(pokemonData); // Imprimir información del primer Pokémon
