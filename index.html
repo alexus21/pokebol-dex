@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<nav class="navbar bg-body-tertiary" data-bs-theme="dark">
+    <section class="container-fluid">
+        <img src="pokemon-icon-file-4.png" width="50">
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </section>
+</nav>
 <main class="row p-5 d-flex justify-content-center">
     <p class="fs-1">PokeList</p>
 </main>
@@ -16,5 +25,7 @@
 <script src="main.js" type="module" defer></script>
 <script src="getApiResponse.js" type="module"></script>
 <script src="cardCreator.js" type="module"></script>
+<script src="getPokemonGeneralInfo.js" type="module"></script>
+
 </body>
 </html>

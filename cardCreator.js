@@ -11,9 +11,10 @@ export const cardCreator = (pokeData) => {
         const myArticle = document.createElement("article");
         myArticle.classList.add("card-body");
 
-        // Crear un encabezado para el nombre del Pokémon.
+        // Crear un encabezado h5 para el nombre del Pokémon.
         const myH5 = document.createElement("h5");
         myH5.classList.add("card-title");
+        // Agregando inicial mayúscula al nombre del Pokémon:
         myH5.textContent = pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
 
         // Crear un botón para ver más detalles del Pokémon.
