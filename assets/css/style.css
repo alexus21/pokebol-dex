@@ -6,14 +6,56 @@ body, html{
 .navbar{
     position: fixed;
     width: 100%;
-    z-index: 1000;
+    z-index: 1;
+}
+
+.poke-list{
+    display: flex;
+    justify-content: center;
 }
 
 .poke-card{
     width: 18rem;
     padding: 0;
+    margin-top: 5%;
 }
 
-.btn-color:hover {
-    font-weight: 500;
+@keyframes shadowRotate {
+    0%{
+        box-shadow: 20px 20px 20px #b32d34,
+        -20px -20px 20px #b32d34;
+    }
+    100% {
+        box-shadow: 20px 20px 20px #4e70b1,
+        -20px -20px 20px #4e70b1;
+    }
 }
+
+.found-card {
+    background-color: #3498db;
+    animation: shadowRotate 2s linear infinite;
+    transform: scale(1.25) translate(0, 35%);
+    z-index: 1;
+}
+
+.myCloseButton{
+    display: none;
+}
+
+.back-to-top-img, .back-to-top-button {
+    position: fixed;
+    z-index: 1;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 25%;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.back-to-top-img{
+    height: 5%;
+}
+
