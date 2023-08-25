@@ -28,18 +28,26 @@ searchPokemonBtn.addEventListener("click", function(event) {
             break; // Salir del ciclo si no se ingresó un nombre
         }
 
-        if (pokemonName.includes(pokemonToSearch)) {
+        if (pokemonName.indexOf(pokemonToSearch) !== -1) {
             section.scrollIntoView();
             section.classList.add("found-card");
+            searchPokemonBtn.disabled = true;
+            input.value = "";
 
             const myCloseButton = document.createElement("button");
-            myCloseButton.classList.add("btn", "btn-primary");
+            myCloseButton.classList.add("btn", "btn-primary", "closeButton");
             myCloseButton.textContent = "Cerrar";
             section.appendChild(myCloseButton);
 
             myCloseButton.addEventListener("click", function (){
                 section.classList.remove("found-card");
-                myCloseButton.classList.toggle("d-none");
+                myCloseButton.classList.add("d-none");
+                searchPokemonBtn.disabled = false;
+            });
+
+            document.querySelector("[data-close-button]").addEventListener("click", function (){
+                myCloseButton.classList.add("d-none");
+                searchPokemonBtn.disabled = false;
             });
 
             document.querySelector("[data-close-button]").addEventListener("click", function() {
