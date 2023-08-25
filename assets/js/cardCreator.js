@@ -1,6 +1,8 @@
 import { getType } from "./getPokemonGeneralInfo.js";
 import { getSpecies } from "./getPokemonGeneralInfo.js";
 
+import * as pokemonInfo from "./getPokemonGeneralInfo.js";
+
 //Función encargada de crear una card para cada Pokémon
 export const cardCreator = (pokeData) => {
     const main = document.querySelector("main");
@@ -28,7 +30,7 @@ export const cardCreator = (pokeData) => {
         myButton.setAttribute("data-bs-target", "#modalInfo"); // ID del modal
         myButton.addEventListener("click", function () {
             showPokemonName(pokemon);
-            showPokemonPicture(index);
+            showPokemonPicture(index, pokemon);
         });
         myButton.textContent = "Ver detalles";
 
@@ -195,12 +197,41 @@ const showPokemonPicture = (index, pokemon) => {
         // }
         
         buttonsContainer1.appendChild(myButton);
-        if (buttonName === "About") {
-            myButton.addEventListener("click", () => {
-                const aboutInfo = getPokemonAboutInfo(pokemon);
-                p.innerText = aboutInfo;
-            });
-        }
+
+        myButton.addEventListener("click", ev => {
+            p.innerText = "";
+
+            pokemonInfo.getSpecies(pokemon).then(data => {
+                if (buttonName === informationButtons[0]){
+                    p.innerText = `Nombre: ${data.name}
+                                    Especie: ${data.species.name}
+                                    Habilidades: ${data.abilities.map(ability => ability.ability.name)}`;
+                }
+                if (buttonName === informationButtons[1]){
+                    p.innerText = `Estadísticas: ${data.stats.map(stat => stat.stat.name)}`;
+                }
+                if (buttonName === informationButtons[2]){
+                    fetch(data.species.url)
+                        .then(response => response.json())
+                        .then(data => {
+                            const speciesUrl = data.species.url;
+                            fetch(speciesUrl)
+                                .then(response => response.json())
+                                .then(speciesData => {
+                                    const evolutionChainUrl = speciesData.evolution_chain.url;
+                                    fetch(evolutionChainUrl)
+                                        .then(response => response.json())
+                                        .then(evolutionData => {
+                                            p.innerText = `Evolución: ${evolutionData.chain}`;
+                                        })
+                                })
+                        })
+                }
+                if (buttonName === informationButtons[3]){
+                    p.innerText = `Movimientos: ${data.moves.map(move => move.move.name)}`;
+                }
+            })
+        })
         buttonsContainer1.appendChild(p);
     });
 
