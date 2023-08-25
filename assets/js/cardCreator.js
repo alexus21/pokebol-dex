@@ -15,7 +15,7 @@ export const cardCreator = (pokeData) => {
 
         // Crear un artículo para el contenido de la tarjeta.
         const myArticle = document.createElement("article");
-        myArticle.classList.add("card-body");
+        myArticle.classList.add("card-body", "rounded");
 
         // Crear un encabezado h5 para el nombre del Pokémon.
         const myH5 = document.createElement("h5");
@@ -25,20 +25,31 @@ export const cardCreator = (pokeData) => {
 
         // Crear un botón para ver más detalles del Pokémon.
         const myButton = document.createElement("button");
-        myButton.classList.add("btn", "btn-primary", "ms-3");
+        myButton.classList.add("btn", "btn-primary", "ms-5");
         myButton.setAttribute("data-bs-toggle", "modal"); // Atributo de Bootstrap para activar el modal
         myButton.setAttribute("data-bs-target", "#modalInfo"); // ID del modal
         myButton.addEventListener("click", function () {
             showPokemonName(pokemon);
             showPokemonPicture(index, pokemon);
         });
-        myButton.textContent = "Ver detalles";
+        myButton.textContent = "Detalles";
 
         // Agregar la imagen del Pokémon.
         const myImg = document.createElement("img");
-        myImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`; // Incrementar el índice en 1
+        // myImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`; // Incrementar el índice en 1
+        myImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${index + 1}.png`; // Cambiar la URL para obtener el GIF
         myImg.classList.add("card-img-top");
         myImg.alt = "Imagen de " + pokemon;
+
+        // Crear un div para mostrar el tipo de especie y la imagen de la pokébola
+        const typePokemonDiv = document.createElement("div");
+        typePokemonDiv.classList.add("type-pokemon-div", "text-center");
+
+        // Agregar estilos al div usando la propiedad style
+        // typePokemonDiv.style.color = "white";
+        typePokemonDiv.style.borderRadius = "25px";
+        typePokemonDiv.style.width = "60px";
+        typePokemonDiv.style.backgroundColor = "rgba(255, 255, 255, 0.4)";
 
         // Obtener el tipo del Pokémon
         getType(pokemon)
@@ -52,9 +63,28 @@ export const cardCreator = (pokeData) => {
             // Si ocurre un error, se podría establecer un color por defecto
             myArticle.style.backgroundColor = "#A8A8A8";
         });
+        
+        // Agregar el tipo de especie debajo del nombre
+        const speciesType = document.createElement("p");
+        speciesType.classList.add("species-type");
+        getType(pokemon)
+            .then(data => {
+                const pokemonType = data.types[0].type.name;
+                speciesType.textContent = `${pokemonType}`.charAt(0).toUpperCase() + pokemonType.slice(1);
+            })
+            .catch(error => {
+                console.error("Error al obtener el tipo:", error);
+            });
+
+        // Agregar los elementos al div
+        typePokemonDiv.appendChild(speciesType);
 
         // Agregar los elementos al article.
         myArticle.appendChild(myH5);
+        
+        // Agregar el div al article
+        myArticle.appendChild(typePokemonDiv);
+
         myArticle.appendChild(myImg);
         myArticle.appendChild(myButton);
 
@@ -162,7 +192,9 @@ const showPokemonPicture = (index, pokemon) => {
     // Agregar la imagen del Pokémon.
     const myImg = document.createElement("img");
     myImg.classList.add("modal-picture");
-    myImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`; // Incrementar el índice en 1
+    // myImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`; // Incrementar el índice en 1
+    // myImg.src = `https://projectpokemon.org/images/normal-sprite/${pokemon}.gif`; // URL del GIF
+    myImg.src = `https://play.pokemonshowdown.com/sprites/ani/${pokemon}.gif`;
     myImg.classList.add("card-img-top");
     myImg.style.width = "200px";
     myImg.style.height = "200px";
