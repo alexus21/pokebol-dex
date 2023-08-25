@@ -21,6 +21,8 @@ searchPokemonBtn.addEventListener("click", function(event) {
     let found = false; // Variable para verificar si se encontró un Pokémon
 
     if (pokemonToSearch === "") {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
         showAlert("Error: Ingresa el nombre del Pokémon a buscar");
         return;
     }
@@ -62,6 +64,8 @@ searchPokemonBtn.addEventListener("click", function(event) {
 
     // Si no se encuentra nada...
     if (!found && pokemonToSearch !== "" && !searchPokemonBtn.disabled) {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
         showAlert("El Pokémon que buscas no ha sido encontrado");
         input.value = "";
     }
