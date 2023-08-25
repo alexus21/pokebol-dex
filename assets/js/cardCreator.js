@@ -210,23 +210,54 @@ const showPokemonPicture = (index, pokemon) => {
                 if (buttonName === informationButtons[1]){
                     p.innerText = `Estadísticas: ${data.stats.map(stat => stat.stat.name)}`;
                 }
-                if (buttonName === informationButtons[2]){
+                // if (buttonName === informationButtons[2]){
+                //     fetch(data.species.url)
+                //         .then(response => response.json())
+                //         .then(data => {
+                //             const speciesUrl = data.species.name;
+                //             fetch(speciesUrl)
+                //                 .then(response => response.json())
+                //                 .then(speciesData => {
+                //                     const evolutionChainUrl = speciesData.evolution_chain.url;
+                //                     fetch(evolutionChainUrl)
+                //                         .then(response => response.json())
+                //                         .then(evolutionData => {
+                //                             p.innerText = `Evolución: ${evolutionData.chain}`;
+                //                         })
+                //                 })
+                //         })
+                // }
+                if (buttonName === informationButtons[2]) {
                     fetch(data.species.url)
                         .then(response => response.json())
-                        .then(data => {
-                            const speciesUrl = data.species.url;
-                            fetch(speciesUrl)
+                        .then(speciesData => {
+                            const evolutionChainUrl = speciesData.evolution_chain.url;
+                            fetch(evolutionChainUrl)
                                 .then(response => response.json())
-                                .then(speciesData => {
-                                    const evolutionChainUrl = speciesData.evolution_chain.url;
-                                    fetch(evolutionChainUrl)
-                                        .then(response => response.json())
-                                        .then(evolutionData => {
-                                            p.innerText = `Evolución: ${evolutionData.chain}`;
-                                        })
+                                .then(evolutionData => {
+                                    const evolutionChain = evolutionData.chain;
+                
+                                    const targetPokemon = speciesData.name; // Nombre del Pokémon seleccionado
+                                    let evolutionText = `Evolución: ${targetPokemon}`;
+                
+                                    let currentChain = evolutionChain;
+                                    while (currentChain.evolves_to.length > 0) {
+                                        const nextChain = currentChain.evolves_to[0];
+                                        evolutionText += ` -> ${nextChain.species.name}`;
+                                        currentChain = nextChain;
+                                    }
+                
+                                    p.innerText = evolutionText;
                                 })
+                                .catch(error => {
+                                    console.error("Error al obtener la cadena de evolución:", error);
+                                });
                         })
+                        .catch(error => {
+                            console.error("Error al obtener los datos de la especie:", error);
+                        });
                 }
+                
                 if (buttonName === informationButtons[3]){
                     p.innerText = `Movimientos: ${data.moves.map(move => move.move.name)}`;
                 }
