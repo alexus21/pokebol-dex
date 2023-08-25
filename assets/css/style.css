@@ -34,8 +34,12 @@ body, html{
 .found-card {
     background-color: #3498db;
     animation: shadowRotate 2s linear infinite;
-    transform: scale(1.25);
+    transform: scale(1.25) translate(0, 35%);
     z-index: 1;
+}
+
+.myCloseButton{
+    display: none;
 }
 
 .back-to-top-img, .back-to-top-button {
@@ -52,6 +56,6 @@ body, html{
 }
 
 .back-to-top-img{
-    height: 10%;
+    height: 5%;
 }
 

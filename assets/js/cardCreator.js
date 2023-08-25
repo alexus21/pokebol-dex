@@ -22,7 +22,7 @@ export const cardCreator = (pokeData) => {
 
         // Crear un botón para ver más detalles del Pokémon.
         const myButton = document.createElement("button");
-        myButton.classList.add("btn", "btn-primary");
+        myButton.classList.add("btn", "btn-primary", "ms-3");
         myButton.setAttribute("data-bs-toggle", "modal"); // Atributo de Bootstrap para activar el modal
         myButton.setAttribute("data-bs-target", "#modalInfo"); // ID del modal
         myButton.addEventListener("click", function () {
@@ -123,5 +123,3 @@ export const showPokemonPicture = (index) => {
 
     myBodyArticle.appendChild(myImg);
 };
-
-
