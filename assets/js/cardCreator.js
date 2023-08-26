@@ -29,7 +29,7 @@ export const cardCreator = (pokeData) => {
         myButton.setAttribute("data-bs-toggle", "modal"); // Atributo de Bootstrap para activar el modal
         myButton.setAttribute("data-bs-target", "#modalInfo"); // ID del modal
         myButton.addEventListener("click", function () {
-            showPokemonName(pokemon);
+            // showPokemonName(pokemon);
             showPokemonPicture(index, pokemon);
         });
         myButton.textContent = "Detalles";
@@ -41,7 +41,7 @@ export const cardCreator = (pokeData) => {
         myImg.classList.add("card-img-top");
         myImg.alt = "Imagen de " + pokemon;
 
-        // Crear un div para mostrar el tipo de especie y la imagen de la pokébola
+        // Crear un div para mostrar el tipo de especie
         const typePokemonDiv = document.createElement("div");
         typePokemonDiv.classList.add("type-pokemon-div", "text-center");
 
@@ -123,7 +123,7 @@ const getTypeColor = (type) => {
 }
 
 export const showModalInfo = (pokemon, index) => {
-    showPokemonName(pokemon);
+    // showPokemonName(pokemon);
     showPokemonPicture(index, pokemon);
     // getPokemonAboutInfo(pokemon);
 }
@@ -148,34 +148,63 @@ export const showModalInfo = (pokemon, index) => {
 //     myHeaderArticle.appendChild(myH5);
 // };
 
-const showPokemonName = (pokemon) => {
+// const showPokemonName = (pokemon) => {
+//     getType(pokemon)
+//     .then(data => {
+//         const myHeaderArticle = document.querySelector(".modal-body");
+//         const pokemonType = data.types[0].type.name;
+//         const typeColor = getTypeColor(pokemonType);
+//         myHeaderArticle.style.backgroundColor = typeColor;
+
+//         // Verificar si ya existe un elemento previo
+//         const currentItem = myHeaderArticle.querySelector(".modal-title");
+//         if (currentItem) {
+//             myHeaderArticle.removeChild(currentItem);
+//         }
+
+//         const myH5 = document.createElement("h5");
+//         myH5.classList.add("modal-title", "fs-5");
+//         myH5.textContent = pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
+
+//         myHeaderArticle.appendChild(myH5);
+//     })
+//     .catch(error => {
+//         console.error("Error al obtener el tipo:", error);
+//     });
+// };
+
+const showPokemonPicture = (index, pokemon) => {
+    const myBodyArticle = document.querySelector(".modal-body");
+    const myHeaderArticle = document.querySelector(".modal-header"); 
+    myBodyArticle.classList.add("d-flex", "flex-column"); // centrar imagen de pokemon
+
     getType(pokemon)
     .then(data => {
-        const myHeaderArticle = document.querySelector(".modal-header");
+        const myBodyArticle = document.querySelector(".modal-body");
         const pokemonType = data.types[0].type.name;
         const typeColor = getTypeColor(pokemonType);
+        myBodyArticle.style.backgroundColor = typeColor;
         myHeaderArticle.style.backgroundColor = typeColor;
-
-        // Verificar si ya existe un elemento previo
-        const currentItem = myHeaderArticle.querySelector(".modal-title");
-        if (currentItem) {
-            myHeaderArticle.removeChild(currentItem);
-        }
-
-        const myH5 = document.createElement("h5");
-        myH5.classList.add("modal-title", "fs-5");
-        myH5.textContent = pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
-
-        myHeaderArticle.appendChild(myH5);
     })
     .catch(error => {
         console.error("Error al obtener el tipo:", error);
     });
-};
 
-const showPokemonPicture = (index, pokemon) => {
-    const myBodyArticle = document.querySelector(".modal-body");
-    myBodyArticle.classList.add("text-center", "d-flex", "flex-column", "align-items-center"); // centrar imagen de pokemon
+    // Verificar si ya existe un elemento previo
+    const currentTitle = myBodyArticle.querySelector(".modal-title");
+    if (currentTitle) {
+        myBodyArticle.removeChild(currentTitle);
+    }
+
+    const currentType = myBodyArticle.querySelector(".modal-type");
+    if (currentType) {
+        myBodyArticle.removeChild(currentType);
+    }
+
+    const currentNumber = myBodyArticle.querySelector(".modal-number");
+    if (currentNumber) {
+        myBodyArticle.removeChild(currentNumber);
+    }
 
     // Verificar si ya existe un elemento previo
     const currentElement = myBodyArticle.querySelector(".modal-picture");
@@ -184,10 +213,61 @@ const showPokemonPicture = (index, pokemon) => {
     }
 
     // Eliminar botones anteriores
-    const buttonsContainer = document.querySelector(".information-buttons");
-    if (buttonsContainer) {
-        myBodyArticle.removeChild(buttonsContainer);
+    const buttonsContainerInformation = document.querySelector(".information-buttons");
+    if (buttonsContainerInformation) {
+        myBodyArticle.removeChild(buttonsContainerInformation);
     }
+
+    const myH5 = document.createElement("h5");
+    myH5.style.fontSize = "30px";
+    // myH5.classList.add("modal-title", "fs-5", "text-white", "mx-4");
+    myH5.classList.add("modal-title", "text-white", "mx-3");
+    myH5.textContent = pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
+    
+    // Crear un div para mostrar el tipo de especie
+    const typePokemonDiv = document.createElement("div");
+    typePokemonDiv.classList.add("type-pokemon-div", "modal-type", "text-center", "mx-3");
+    
+    //  Agregar estilos al div usando la propiedad style
+    typePokemonDiv.style.fontWeight = "500";
+    typePokemonDiv.style.borderRadius = "25px";
+    typePokemonDiv.style.width = "60px";
+    typePokemonDiv.style.backgroundColor = "rgba(255, 255, 255, 0.4)";
+    
+    // Agregar el tipo de especie debajo del nombre
+    const speciesType = document.createElement("small");
+    speciesType.classList.add("species-type", "text-white");
+    getType(pokemon)
+    .then(data => {
+        const pokemonType = data.types[0].type.name;
+        speciesType.textContent = `${pokemonType}`.charAt(0).toUpperCase() + pokemonType.slice(1);
+    })
+    .catch(error => {
+        console.error("Error al obtener el tipo:", error);
+    });
+    
+    // Obtener el número de la Pokédex
+    const pokemonNumber = String(index + 1).padStart(3, "0"); // Formatear el número con ceros a la izquierda
+
+    // Crear un div para mostrar el tipo de especie y el número de la Pokédex
+    const typeNumberDiv = document.createElement("div");
+    typeNumberDiv.classList.add("modal-number" ,"type-number-div", "d-flex", "justify-content-end", "mx-3");
+    // Agregar el número de la Pokédex
+    const pokedexNumber = document.createElement("small");
+    pokedexNumber.classList.add("pokedex-number", "text-white");
+    pokedexNumber.style.fontSize = "20px";
+    pokedexNumber.style.fontWeight = "500";
+    pokedexNumber.textContent = `#${pokemonNumber}`;
+
+    // typeNumberDiv.appendChild(speciesType);
+    
+    myBodyArticle.appendChild(myH5);
+
+    typeNumberDiv.appendChild(pokedexNumber);
+    myBodyArticle.appendChild(typeNumberDiv);
+    
+    typePokemonDiv.appendChild(speciesType);
+    myBodyArticle.appendChild(typePokemonDiv);
 
     // Agregar la imagen del Pokémon.
     const myImg = document.createElement("img");
@@ -195,7 +275,7 @@ const showPokemonPicture = (index, pokemon) => {
     // myImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`; // Incrementar el índice en 1
     // myImg.src = `https://projectpokemon.org/images/normal-sprite/${pokemon}.gif`; // URL del GIF
     myImg.src = `https://play.pokemonshowdown.com/sprites/ani/${pokemon}.gif`;
-    myImg.classList.add("card-img-top");
+    myImg.classList.add("card-img-top", "mx-auto");
     myImg.style.width = "200px";
     myImg.style.height = "200px";
 
@@ -203,6 +283,8 @@ const showPokemonPicture = (index, pokemon) => {
     
     const informationButtons = ["About", "Base Stats", "Evolution", "Moves"];
     const buttonsContainer1 = document.createElement("div");
+    buttonsContainer1.classList.add("w-100", "rounded-top-4", "d-flex", "justify-content-center");
+    buttonsContainer1.style.backgroundColor = "white";
     buttonsContainer1.classList.add("information-buttons");
     // buttonsContainer.classList.add("d-flex", "align-items-center"); // Aplicar flex-direction column y centrar elementos horizontalmente
 
@@ -211,22 +293,9 @@ const showPokemonPicture = (index, pokemon) => {
     
     informationButtons.forEach(buttonName => {
         const myButton = document.createElement("button");
-        myButton.classList.add("btn", "m-3", "btn-color");
+        myButton.classList.add("btn", "btn-color");
         myButton.style.border = "none";
         myButton.textContent = buttonName;
-        
-        
-        // if (buttonName === "About") {
-        //     // Obtener la especie del Pokémon y mostrarla en el elemento <p>
-        //     getSpecies(pokemon)
-        //     .then(data => {
-        //         const pokemonSpecie = data.species.name;
-        //         p.innerText = `Especie: ${pokemonSpecie}`;
-        //     })
-        //     .catch(error => {
-        //         console.error("Error al obtener la especie:", error);
-        //     });
-        // }
         
         buttonsContainer1.appendChild(myButton);
 
