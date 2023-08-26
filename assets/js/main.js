@@ -43,3 +43,14 @@ window.addEventListener("scroll", () => {
 backToTopBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" }); // Desplazarse suavemente al principio de la página
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Muestra la animación por un período de tiempo (en milisegundos)
+    setTimeout(function () {
+        // Oculta la animación
+        document.querySelector(".center-on-page").classList.add("d-none");
+
+        // Muestra el contenido general
+        document.querySelector("main").classList.remove("d-none");
+    }, 5000);
+});
