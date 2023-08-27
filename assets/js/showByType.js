@@ -37,8 +37,6 @@ const getPressedValue = () => {
     document.querySelectorAll(".buttonPokeList").forEach(button => {
         button.addEventListener("click", function () {
             console.log(button.textContent);
-            getSelectedTypesFromDom(button.textContent);
-            return;
         });
     });
 };

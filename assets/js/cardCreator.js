@@ -389,3 +389,8 @@ const getPokemonAboutInfo = (pokemon) => {
         return "No se pudo obtener la informacion";
     });
 };
+
+// ...
+
+
+
