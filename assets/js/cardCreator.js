@@ -96,7 +96,7 @@ export const cardCreator = (pokeData) => {
 };
 
 
-const getTypeColor = (type) => {
+export const getTypeColor = (type) => {
     const typeColors = {
         normal: "#A8A77A",
         fire: "#EE8130",

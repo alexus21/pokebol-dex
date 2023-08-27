@@ -94,3 +94,11 @@ main{
         padding-top: 10%;
     }
 }
+
+.dropdown-menu{
+    border: 0;
+}
+
+button{
+    cursor: pointer;
+}

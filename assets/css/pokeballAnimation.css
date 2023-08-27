@@ -30,7 +30,7 @@ body {
     overflow: hidden;
     box-shadow: inset -10px 10px 0 10px #ccc;
     animation: fall 1s ease-in-out,
-    shake 1s cubic-bezier(.36,.07,.19,.97) 3,
+    shake 1s cubic-bezier(.36,.07,.19,.97) 5,
     shadowRotate 1s linear infinite;
 }
 .pokeball::before,
