@@ -9,26 +9,49 @@
     <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/pokeballAnimation.css">
 </head>
 <body>
-<nav class="navbar bg-body-tertiary" data-bs-theme="dark">
-    <section class="container-fluid">
-        <div></div>
-        <form action="" class="d-flex">
-            <button class="btn" data-logo><img src="assets/img/pokemon-icon-file-4.png" width="50"></button>
-        </form>
-        <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Buscar un pokemon" aria-label="Search" data-input>
-            <button class="btn btn-outline-success" data-search-pokemon-btn>Buscar</button>
-        </form>
-    </section>
+
+<div class="center-on-page">
+    <div class="pokeball">
+        <div class="pokeball__button"></div>
+    </div>
+</div>
+
+<nav class="navbar bg-body-tertiary fixed-top d-none" data-bs-theme="dark">
+    <div class="container-fluid">
+        <article class="left-item">
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Buscar un pokemon" aria-label="Search" data-input>
+                <button class="btn btn-outline-success" data-search-pokemon-btn>Buscar</button>
+            </form>
+        </article>
+        <article>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </article>
+        <article class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item dropdown pokemonListByType">
+                        <p class="fs-2">Pokémons por Tipos</p>
+                        <hr>
+                        <ul class="dropdown-menu text-center"></ul>
+                    </li>
+                </ul>
+            </div>
+        </article>
+    </div>
 </nav>
-<main class="row p-5 d-flex justify-content-center">
-    <p class="fs-1 pt-5 poke-list">PokeList</p>
+
+<main class="row d-none">
+    <img src="assets/img/banner.png" alt="banner" class="banner-img">
 
     <!-- <section class="modal fade" id="modalInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 350px; height: auto;"> -->
     <section class="modal fade" id="modalInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <article class="modal-dialog">
+        <article class="modal-dialog modal-dialog-centered">
             <article class="modal-content">
                 <article class="modal-header p-1">
                     <!--                    Nombre del Pokemon acá-->
@@ -40,11 +63,8 @@
 <!--                    Imagen del Pokemon acá-->
                 </article>
                 <article class="modal-information">
-
+<!---->
                 </article>
-                <!-- <article class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-close-button>Cerrar</button>
-                </article> -->
             </article>
         </article>
     </section>
@@ -69,5 +89,11 @@
 <script src="assets/js/cardCreator.js" type="module"></script>
 <script src="assets/js/getPokemonGeneralInfo.js" type="module"></script>
 <script src="assets/js/searchBar.js" type="module" defer></script>
+<script src="assets/js/showByType.js" type="module" defer></script>
+<noscript>
+    <div class="d-flex justify-content-center">
+        <div class="alert alert-danger w-50 text-center">Debes activar el uso de javascript para poder hacer un correcto uso de esta web</div>
+    </div>
+</noscript>
 </body>
 </html>

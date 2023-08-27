@@ -1,7 +1,6 @@
-import { getType } from "./getPokemonGeneralInfo.js";
-import { getSpecies } from "./getPokemonGeneralInfo.js";
-
 import * as pokemonInfo from "./getPokemonGeneralInfo.js";
+import {getSpecies, getType} from "./getPokemonGeneralInfo.js";
+import {presentByTypes} from "./showByType.js";
 
 //Función encargada de crear una card para cada Pokémon
 export const cardCreator = (pokeData) => {
@@ -55,8 +54,8 @@ export const cardCreator = (pokeData) => {
         getType(pokemon)
         .then(data => {
             const pokemonType = data.types[0].type.name;
-            const typeColor = getTypeColor(pokemonType);
-            myArticle.style.backgroundColor = typeColor;
+            myArticle.style.backgroundColor = getTypeColor(pokemonType);
+            presentByTypes(pokemonType);
         })
         .catch(error => {
             console.error("Error al obtener el tipo:", error);
@@ -97,7 +96,7 @@ export const cardCreator = (pokeData) => {
 };
 
 
-const getTypeColor = (type) => {
+export const getTypeColor = (type) => {
     const typeColors = {
         normal: "#A8A77A",
         fire: "#EE8130",
@@ -390,3 +389,8 @@ const getPokemonAboutInfo = (pokemon) => {
         return "No se pudo obtener la informacion";
     });
 };
+
+// ...
+
+
+

@@ -1,14 +1,6 @@
-const logoBtn = document.querySelector("[data-logo]");
+
 const searchPokemonBtn = document.querySelector("[data-search-pokemon-btn]");
 searchPokemonBtn.setAttribute("data-bs-toggle", "modal"); // Atributo de Bootstrap para activar el modal
-// searchPokemonBtn.setAttribute("data-bs-target", "#modalError"); // ID del modal
-
-// Maneja el evento de clic en el botón de logo para volver al inicio de la página.
-logoBtn.addEventListener("click", function(event) {
-    event.preventDefault();
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-});
 
 // Maneja el evento de clic en el botón de búsqueda de Pokémon.
 searchPokemonBtn.addEventListener("click", function(event) {
@@ -91,4 +83,7 @@ const showAlert = (message) => {
     }, 3000);
 
     myErrorBody.appendChild(myAlertArticle);
+
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
 };
