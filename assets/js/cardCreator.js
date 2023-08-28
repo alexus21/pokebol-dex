@@ -217,6 +217,12 @@ const showPokemonPicture = (index, pokemon) => {
         myBodyArticle.removeChild(buttonsContainerInformation);
     }
 
+    // Eliminar botones anteriores
+    const informationContainerPokemon = document.querySelector(".information-pokemon");
+    if (informationContainerPokemon) {
+        myBodyArticle.removeChild(informationContainerPokemon);
+    }
+
     const myH5 = document.createElement("h5");
     myH5.style.fontSize = "30px";
     // myH5.classList.add("modal-title", "fs-5", "text-white", "mx-4");
@@ -282,17 +288,23 @@ const showPokemonPicture = (index, pokemon) => {
     
     const informationButtons = ["About", "Base Stats", "Evolution", "Moves"];
     const buttonsContainer1 = document.createElement("div");
-    buttonsContainer1.classList.add("w-100", "rounded-top-4", "d-flex", "justify-content-center");
+    buttonsContainer1.classList.add("w-100", "rounded-top-4", "text-center");
     buttonsContainer1.style.backgroundColor = "white";
     buttonsContainer1.classList.add("information-buttons");
     // buttonsContainer.classList.add("d-flex", "align-items-center"); // Aplicar flex-direction column y centrar elementos horizontalmente
 
     // Crear un elemento <p> para mostrar información
     const p = document.createElement("p");
-    
+    p.style.backgroundColor = "white";
+    p.style.paddingLeft = "63px";
+    p.classList.add("m-0", "information-pokemon");
+
+    const imageContainer = document.createElement("div");
+    imageContainer.classList.add("information-pokemon");
+
     informationButtons.forEach(buttonName => {
         const myButton = document.createElement("button");
-        myButton.classList.add("btn", "btn-color");
+        myButton.classList.add("btn", "btn-color", "px-4");
         myButton.style.border = "none";
         myButton.textContent = buttonName;
         
@@ -300,33 +312,52 @@ const showPokemonPicture = (index, pokemon) => {
 
         myButton.addEventListener("click", ev => {
             p.innerText = "";
+            imageContainer.innerText = "";
+            imageContainer.innerHTML = "";
 
             pokemonInfo.getSpecies(pokemon).then(data => {
                 if (buttonName === informationButtons[0]){
-                    p.innerText = `Nombre: ${data.name}
-                                    Especie: ${data.species.name}
-                                    Habilidades: ${data.abilities.map(ability => ability.ability.name)}`;
+                    p.innerHTML = `Species: <strong>${data.species.name}.</strong><br>
+                                   Height: <strong>${data.height * 10 + " cm."}</strong><br>
+                                   Weight: <strong>${data.weight + " lb."}</strong><br>
+                                   Abilities: <strong>${data.abilities.map(ability => ability.ability.name).join(", ")}.</strong>`;
                 }
-                if (buttonName === informationButtons[1]){
-                    p.innerText = `Estadísticas: ${data.stats.map(stat => stat.stat.name)}`;
+                if (buttonName === informationButtons[1]) {
+                    const statsContainer = document.createElement("div");
+                    statsContainer.classList.add("stats-container");
+                
+                    data.stats.forEach(stat => {
+                        const statName = stat.stat.name;
+                        const statValue = stat.base_stat;
+                
+                        const statElement = document.createElement("div");
+                        statElement.classList.add("stat");
+                
+                        const statInfoElement = document.createElement("div");
+                        statInfoElement.classList.add("stat-info");
+                
+                        const statNameElement = document.createElement("span");
+                        statNameElement.classList.add("stat-name");
+                        statNameElement.textContent = statName;
+                
+                        const statValueElement = document.createElement("span");
+                        statValueElement.classList.add("stat-value");
+                        statValueElement.textContent = statValue;
+                
+                        const statBarElement = document.createElement("div");
+                        statBarElement.classList.add("stat-bar");
+                        // statBarElement.style.width = `${statValue}%`;
+                
+                        statInfoElement.appendChild(statNameElement);
+                        statInfoElement.appendChild(statValueElement);
+                        statElement.appendChild(statInfoElement);
+                        statElement.appendChild(statBarElement);
+                
+                        statsContainer.appendChild(statElement);
+                    });
+                
+                    p.appendChild(statsContainer);
                 }
-                // if (buttonName === informationButtons[2]){
-                //     fetch(data.species.url)
-                //         .then(response => response.json())
-                //         .then(data => {
-                //             const speciesUrl = data.species.name;
-                //             fetch(speciesUrl)
-                //                 .then(response => response.json())
-                //                 .then(speciesData => {
-                //                     const evolutionChainUrl = speciesData.evolution_chain.url;
-                //                     fetch(evolutionChainUrl)
-                //                         .then(response => response.json())
-                //                         .then(evolutionData => {
-                //                             p.innerText = `Evolución: ${evolutionData.chain}`;
-                //                         })
-                //                 })
-                //         })
-                // }
                 if (buttonName === informationButtons[2]) {
                     fetch(data.species.url)
                         .then(response => response.json())
@@ -336,18 +367,25 @@ const showPokemonPicture = (index, pokemon) => {
                                 .then(response => response.json())
                                 .then(evolutionData => {
                                     const evolutionChain = evolutionData.chain;
-                
-                                    const targetPokemon = speciesData.name; // Nombre del Pokémon seleccionado
-                                    let evolutionText = `Evolución: ${targetPokemon}`;
-                
+                                    
+                                    // Función para agregar una imagen al contenedor
+                                    const addEvolutionImage = (pokemonName) => {
+                                        const img = document.createElement("img");
+                                        img.src = `https://play.pokemonshowdown.com/sprites/ani/${pokemonName}.gif`;
+                                        img.alt = 'Pokémon Evolution';
+                                        img.classList.add("evolution-gif", "mx-5");
+                                        // imageContainer.style.width = "100px";
+                                        // imageContainer.style.height = "100px";
+                                        imageContainer.appendChild(img);
+                                    };
+                                
                                     let currentChain = evolutionChain;
-                                    while (currentChain.evolves_to.length > 0) {
-                                        const nextChain = currentChain.evolves_to[0];
-                                        evolutionText += ` -> ${nextChain.species.name}`;
-                                        currentChain = nextChain;
+                                    
+                                    // Agregar las imágenes de todas las evoluciones anteriores
+                                    while (currentChain) {
+                                        addEvolutionImage(currentChain.species.name);
+                                        currentChain = currentChain.evolves_to[0];
                                     }
-                
-                                    p.innerText = evolutionText;
                                 })
                                 .catch(error => {
                                     console.error("Error al obtener la cadena de evolución:", error);
@@ -356,17 +394,26 @@ const showPokemonPicture = (index, pokemon) => {
                         .catch(error => {
                             console.error("Error al obtener los datos de la especie:", error);
                         });
+
+                        buttonsContainer1.appendChild(imageContainer);
                 }
+                // if (buttonName === informationButtons[3]){
+                //     p.innerText = `Movimientos: ${data.moves.map(move => move.move.name)}`;
+                // }
+                if (buttonName === informationButtons[3]) {
+                    const maxMovesToShow = 5;
+                    const movesToDisplay = data.moves.slice(0, maxMovesToShow);
                 
-                if (buttonName === informationButtons[3]){
-                    p.innerText = `Movimientos: ${data.moves.map(move => move.move.name)}`;
-                }
+                    const movesList = movesToDisplay.map(move => move.move.name).join("<br>");
+                    p.innerHTML = `Movimientos: <br><strong>${movesList}</strong>`;
+                }               
             })
         })
-        buttonsContainer1.appendChild(p);
+        // buttonsContainer1.appendChild(p);
     });
 
     myBodyArticle.appendChild(buttonsContainer1);
+    myBodyArticle.appendChild(p);
 };
 
 const getPokemonAboutInfo = (pokemon) => {
@@ -391,6 +438,3 @@ const getPokemonAboutInfo = (pokemon) => {
 };
 
 // ...
-
-
-
