@@ -1,5 +1,5 @@
 // Importar la función getTypeColor desde otro archivo
-import { getTypeColor } from "./cardCreator.js";
+import {cardCreator, getTypeColor} from "./cardCreator.js";
 import {getType} from "./getPokemonGeneralInfo.js";
 
 // Array para llevar un registro de los tipos ya creados
@@ -36,15 +36,35 @@ export const presentByTypes = (pokemonType) => {
 const getPressedValue = () => {
     document.querySelectorAll(".buttonPokeList").forEach(button => {
         button.addEventListener("click", function () {
-            console.log(button.textContent);
+            filterSpecies(button.textContent);
         });
-    });
+    })
 };
 
-const getSelectedTypesFromDom = (type) => {
-    const speciesArray = document.querySelectorAll(".species-type")
-    speciesArray.forEach(pokemonType => {
-        console.log(pokemonType.textContent);
-        return;
+const filterSpecies = (type) => {
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        const specieList = card.querySelectorAll(".species-type");
+        const nameList = card.querySelectorAll(".card-title");
+        const nSpecies = specieList.length;
+
+        let shouldHideCard = true; // Variable para rastrear si se debe ocultar toda la tarjeta
+
+        for (let index = 0; index < nSpecies; index++) {
+            const specie = specieList[index];
+            if (specie.textContent === type) {
+                shouldHideCard = false; // Si al menos una especie coincide, no ocultar la tarjeta
+                break;
+            }
+        }
+
+        if (shouldHideCard) {
+            card.classList.add("d-none"); // Ocultar la tarjeta completa
+        } else {
+            nameList.forEach(name => {
+                name.classList.remove("d-none"); // Mostrar el nombre
+            });
+        }
     });
 };
