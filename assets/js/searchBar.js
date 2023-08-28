@@ -1,9 +1,11 @@
+import {resetView} from "./showByType.js";
 
 const searchPokemonBtn = document.querySelector("[data-search-pokemon-btn]");
 searchPokemonBtn.setAttribute("data-bs-toggle", "modal"); // Atributo de Bootstrap para activar el modal
 
 // Maneja el evento de clic en el botón de búsqueda de Pokémon.
 searchPokemonBtn.addEventListener("click", function(event) {
+    resetView();
     event.preventDefault(); // Detener el comportamiento predeterminado del botón de enviar
 
     const input = document.querySelector("[data-input]");

@@ -11,6 +11,7 @@ const createdTypes = [];
  */
 export const presentByTypes = (pokemonType) => {
     const pokemonListByType = document.querySelector(".pokemonListByType");
+    addResetViewButton();
 
     // Verificar si el tipo de Pokémon ya ha sido creado
     if (createdTypes.indexOf(pokemonType) === -1) {
@@ -30,6 +31,14 @@ export const presentByTypes = (pokemonType) => {
     getPressedValue();
 };
 
+const addResetViewButton = () => {
+    const resetButton = document.createElement("button");
+    resetButton.textContent = "Reiniciar vista";
+    resetButton.classList.add("mb-3", "rounded-3", "w-100", "fs-4", "resetViewButton", "d-none");
+    resetButton.addEventListener("click", resetView);
+    document.querySelector(".pokemonListByType").appendChild(resetButton);
+}
+
 /**
  * Muestra los detalles al hacer clic en un botón de tipo de Pokémon.
  */
@@ -42,29 +51,31 @@ const getPressedValue = () => {
 };
 
 const filterSpecies = (type) => {
+    resetView();
     const cards = document.querySelectorAll(".card");
 
     cards.forEach(card => {
         const specieList = card.querySelectorAll(".species-type");
-        const nameList = card.querySelectorAll(".card-title");
         const nSpecies = specieList.length;
 
-        let shouldHideCard = true; // Variable para rastrear si se debe ocultar toda la tarjeta
 
         for (let index = 0; index < nSpecies; index++) {
             const specie = specieList[index];
-            if (specie.textContent === type) {
-                shouldHideCard = false; // Si al menos una especie coincide, no ocultar la tarjeta
+            if (specie.textContent !== type) {
+                card.classList.add("d-none");
+                document.querySelector(".resetViewButton").classList.remove("d-none");
                 break;
             }
         }
-
-        if (shouldHideCard) {
-            card.classList.add("d-none"); // Ocultar la tarjeta completa
-        } else {
-            nameList.forEach(name => {
-                name.classList.remove("d-none"); // Mostrar el nombre
-            });
-        }
     });
+};
+
+export const resetView = () => {
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        card.classList.remove("d-none");
+    });
+
+    document.querySelector(".resetViewButton").classList.add("d-none");
 };
