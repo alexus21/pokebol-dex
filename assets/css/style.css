@@ -102,3 +102,7 @@ main{
 button{
     cursor: pointer;
 }
+
+.buttonPokeList:hover{
+    transform: scale(1.15);
+}
