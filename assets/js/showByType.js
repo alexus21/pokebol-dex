@@ -18,6 +18,8 @@ export const presentByTypes = (pokemonType) => {
         button.style.color = "black";
         button.style.background = getTypeColor(pokemonType);
         button.classList.add("mb-3", "rounded-3", "w-100", "fs-4", "buttonPokeList");
+        button.setAttribute("data-bs-dismiss", "offcanvas");
+        button.setAttribute("aria-label", "Close");
         button.textContent = pokemonType.charAt(0).toUpperCase() + pokemonType.slice(1);
 
         // Separador
@@ -37,6 +39,8 @@ const addResetViewButton = () => {
     const resetButton = document.createElement("button");
     resetButton.textContent = "Reiniciar vista";
     resetButton.classList.add("mb-3", "rounded-3", "w-100", "fs-4", "resetViewButton", "d-none");
+    resetButton.setAttribute("data-bs-dismiss", "offcanvas");
+    resetButton.setAttribute("aria-label", "Close");
     resetButton.addEventListener("click", resetView);
     document.querySelector(".pokemonListByType").appendChild(resetButton);
 }
