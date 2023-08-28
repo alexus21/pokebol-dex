@@ -53,5 +53,5 @@ document.addEventListener("DOMContentLoaded", function () {
         // Muestra el contenido general
         document.querySelector("main").classList.remove("d-none");
         document.querySelector("nav").classList.remove("d-none");
-    }, 5);
+    }, 5000);
 });
