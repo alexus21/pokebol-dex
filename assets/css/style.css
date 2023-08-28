@@ -95,6 +95,13 @@ main{
     }
 }
 
+@media (max-width: 550px){
+    .banner-img{
+        width: 40%;
+        padding-top: 15%;
+    }
+}
+
 .dropdown-menu{
     border: 0;
 }
