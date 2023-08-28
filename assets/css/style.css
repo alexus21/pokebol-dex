@@ -106,3 +106,39 @@ button{
 .buttonPokeList:hover{
     transform: scale(1.15);
 }
+
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.stat-info {
+    display: flex;
+    align-items: center;
+    width: 150px;
+    justify-content: space-between;
+    margin-right: 8px;
+}
+
+.stat-name {
+    font-weight: bold;
+}
+
+.stat-value {
+    font-size: 14px;
+    margin-left: 6px;
+}
+
+.stat-bar {
+    height: 8px;
+    background-color:green;
+    border-radius: 4px;
+    width: 220px; 
+}
