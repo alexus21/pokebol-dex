@@ -29,13 +29,15 @@ function Pokemon(){
 }
 
 const backToTopBtn = document.getElementsByClassName("back-to-top-button")[0];
+backToTopBtn.style.display = "none"; //Oculto al cargar laa página.
 
 // Agregar un evento de desplazamiento para controlar cuándo mostrar u ocultar el botón
 window.addEventListener("scroll", () => {
-    if (window.pageYOffset > 500) {
+    if (window.pageYOffset > 1000) {
         backToTopBtn.style.display = "block"; // Mostrar el botón si el desplazamiento es mayor a 1500 píxeles
-    } else {
-        backToTopBtn.style.display = "none"; // Ocultar el botón si el desplazamiento es menor o igual a 1500 píxeles
+    }
+    else{
+        backToTopBtn.style.display = "none";
     }
 });
 
