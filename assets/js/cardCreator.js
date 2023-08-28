@@ -96,6 +96,8 @@ export const cardCreator = (pokeData) => {
 };
 
 
+
+
 export const getTypeColor = (type) => {
     const typeColors = {
         normal: "#A8A77A",
@@ -437,13 +439,13 @@ const getPokemonAboutInfo = (pokemon) => {
     // try {
     //     const data =  getSpecies(pokemon);
     //     const pokemonSpecie = data.species.name;
-        
+
     //     // Puedes agregar más información aquí
     //     return `Especie: ${pokemonSpecie}`;
     //     // return aboutInfo;
     // } catch (error) {
     //     console.error("Error al obtener la información 'About':", error);
-    //     return "No se pudo obtener la información"; 
+    //     return "No se pudo obtener la información";
     // }
     getSpecies(pokemon).then(data => {
         const pokemonSpecie = data.species.name;
