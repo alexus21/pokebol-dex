@@ -325,7 +325,17 @@ const showPokemonPicture = (index, pokemon) => {
                 if (buttonName === informationButtons[1]) {
                     const statsContainer = document.createElement("div");
                     statsContainer.classList.add("stats-container");
-                
+                    let maximo = -Infinity;
+
+                    data.stats.forEach(stat => {
+                        if (stat.base_stat > maximo) {
+                            maximo = stat.base_stat;
+                        }
+                    });
+
+                    console.log(maximo);
+
+
                     data.stats.forEach(stat => {
                         const statName = stat.stat.name;
                         const statValue = stat.base_stat;
@@ -345,9 +355,16 @@ const showPokemonPicture = (index, pokemon) => {
                         statValueElement.textContent = statValue;
                 
                         const statBarElement = document.createElement("div");
+                        document.body.appendChild(statBarElement);
                         statBarElement.classList.add("stat-bar");
-                        // statBarElement.style.width = `${statValue}%`;
-                
+
+                        let equivalencia = (parseInt(getComputedStyle(statBarElement).getPropertyValue("width")) / maximo) * statValue;
+                        console.log(equivalencia);
+
+                        document.body.removeChild(statBarElement);
+                        statBarElement.style.width = `${equivalencia}px`;
+
+
                         statInfoElement.appendChild(statNameElement);
                         statInfoElement.appendChild(statValueElement);
                         statElement.appendChild(statInfoElement);
