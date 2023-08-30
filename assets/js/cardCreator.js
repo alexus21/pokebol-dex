@@ -1,6 +1,5 @@
-import * as pokemonInfo from "./getPokemonGeneralInfo.js";
-import {getSpecies, getType} from "./getPokemonGeneralInfo.js";
 import {presentByTypes} from "./showByType.js";
+import * as datos from "./main.js";
 
 //Función encargada de crear una card para cada Pokémon
 export const cardCreator = (pokeData) => {
@@ -27,7 +26,7 @@ export const cardCreator = (pokeData) => {
         typePokemonDiv.classList.add("type-pokemon-div", "text-center", "species-div");
 
         // Obtener el tipo del Pokémon
-        getType(pokemon)
+        datos.Pokemon.dibujarPokemon(pokemon)
         .then(data => {
             const pokemonType = data.types[0].type.name;
             myArticle.style.backgroundColor = getTypeColor(pokemonType);
@@ -42,7 +41,7 @@ export const cardCreator = (pokeData) => {
         // Agregar el tipo de especie debajo del nombre
         const speciesType = document.createElement("p");
         speciesType.classList.add("species-type");
-        getType(pokemon)
+        datos.Pokemon.dibujarPokemon(pokemon)
             .then(data => {
                 const pokemonType = data.types[0].type.name;
                 speciesType.textContent = `${pokemonType}`.charAt(0).toUpperCase() + pokemonType.slice(1);
@@ -125,7 +124,7 @@ const showPokemonPicture = (index, pokemon) => {
     const myHeaderArticle = document.querySelector(".modal-header"); 
     myBodyArticle.classList.add("d-flex", "flex-column"); // centrar imagen de pokemon
 
-    getType(pokemon)
+    datos.Pokemon.dibujarPokemon(pokemon)
     .then(data => {
         const myBodyArticle = document.querySelector(".modal-body");
         const pokemonType = data.types[0].type.name;
@@ -152,7 +151,7 @@ const showPokemonPicture = (index, pokemon) => {
     // Agregar el tipo de especie debajo del nombre
     const speciesType = document.createElement("small");
     speciesType.classList.add("species-type", "text-white");
-    getType(pokemon)
+    datos.Pokemon.dibujarPokemon(pokemon)
     .then(data => {
         const pokemonType = data.types[0].type.name;
         speciesType.textContent = `${pokemonType}`.charAt(0).toUpperCase() + pokemonType.slice(1);
@@ -219,7 +218,7 @@ const showPokemonPicture = (index, pokemon) => {
             imageContainer.innerText = "";
             imageContainer.innerHTML = "";
 
-            pokemonInfo.getSpecies(pokemon).then(data => {
+            datos.Pokemon.dibujarPokemon(pokemon).then(data => {
                 if (buttonName === informationButtons[0]){
                     p.innerHTML = `Species: <strong>${data.species.name}.</strong><br>
                                    Height: <strong>${data.height * 10 + " cm."}</strong><br>
@@ -334,11 +333,11 @@ const showStats = (data) => {
 
         // Crea un elemento <div> para mostrar la estadística
         const statElement = document.createElement("div");
-        statElement.classList.add("stat");
+        statElement.classList.add("stat", "row");
 
         // Crea un elemento <div> para contener la información de la estadística
         const statInfoElement = document.createElement("div");
-        statInfoElement.classList.add("stat-info");
+        statInfoElement.classList.add("stat-info", "col-sm-6", "col-12");
 
         // Crea un elemento <span> para mostrar el nombre de la estadística
         const statNameElement = document.createElement("span");
@@ -352,18 +351,23 @@ const showStats = (data) => {
 
         // Crea un elemento <div> para representar la barra de la estadística
         const statBarElement = document.createElement("div");
+        const statBarElementParent = document.createElement("div");
+        statBarElementParent.style.width = "220px";
+        statBarElementParent.classList.add("col-12");
         document.body.appendChild(statBarElement);
         statBarElement.classList.add("stat-bar");
 
         // Calcula la equivalencia de la anchura de la barra basada en el valor de la estadística
         let equivalencia = (parseInt(getComputedStyle(statBarElement).getPropertyValue("width")) / maximo) * statValue;
         console.log(equivalencia);
+        statBarElement.style.backgroundColor = getTypeColor(data.types[0].type.name);
 
         // Elimina el elemento temporal de la barra del cuerpo del documento
         document.body.removeChild(statBarElement);
 
         // Establece el ancho de la barra de la estadística
         statBarElement.style.width = `${equivalencia}px`;
+        statBarElementParent.appendChild(statBarElement);
 
         // Agrega el nombre y valor de la estadística al contenedor de información de la estadística
         statInfoElement.appendChild(statNameElement);
@@ -371,7 +375,7 @@ const showStats = (data) => {
 
         // Agrega la información de la estadística y la barra al elemento principal de la estadística
         statElement.appendChild(statInfoElement);
-        statElement.appendChild(statBarElement);
+        statElement.appendChild(statBarElementParent);
 
         // Agrega el elemento de la estadística al contenedor general de estadísticas
         statsContainer.appendChild(statElement);

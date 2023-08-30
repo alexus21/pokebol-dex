@@ -1,32 +1,59 @@
+export const Pokemons = (function()  {
+    const getPokemonList = async () => {
+        const pokemonNumber = 150;
 
+        return fetch("https://pokeapi.co/api/v2/pokemon?limit=150")
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Convertir la respuesta a JSON y retornar los datos
+                } else {
+                    throw new Error("Error al procesar datos: " + response.status);
+                }
+            });
 
-function Pokemon(){
-
-    const showPokemonSpecies = function (){
-        return "Especie: ";
     }
 
-    const showPokemonHeight = function (){
-        return "Altura: ";
+    return{
+        getPokemonDetails: getPokemonList
+    }
+})();
+
+export const Pokemon = (() => {
+    const traerMetodo = Object.create(Pokemons);
+
+    const timeOut = async (url) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error("Error al procesar datos");
+            }
+            return await response.json();
+        } catch (error) {
+            throw new Error("Error: " + error);
+        }
+    };
+
+    const getInfo = async function (pokemonName) {
+        return traerMetodo.getPokemonDetails()
+            .then(data => {
+                const pokemon = data.results.find(p => p.name === pokemonName);
+
+                if (pokemon) {
+                    return timeOut(pokemon.url);
+                } else {
+                    return null;
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener la lista de Pokémon:', error);
+                return null;
+            });
     }
 
-    const showPokemonWeight = function (){
-        return "Peso: ";
+    return {
+        dibujarPokemon:getInfo
     }
-
-    const showPokemonType = function (){
-        return "Tipo: ";
-    }
-
-    const showPokemonStats = function (){
-        return "Stats: ";
-    }
-
-    const showPokemonMoves = function (){
-        return "Movimientos: ";
-    }
-
-}
+})();
 
 const backToTopBtn = document.getElementsByClassName("back-to-top-button")[0];
 backToTopBtn.style.display = "none"; //Oculto al cargar laa página.
