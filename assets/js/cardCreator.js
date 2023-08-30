@@ -256,12 +256,13 @@ const showPokemonPicture = (index, pokemon) => {
                         buttonsContainer1.appendChild(imageContainer);
                 }
                 if (buttonName === informationButtons[3]) {
-                    const maxMovesToShow = 5;
-                    const movesToDisplay = data.moves.slice(0, maxMovesToShow);
-                
-                    const movesList = movesToDisplay.map(move => move.move.name).join("<br>");
-                    p.innerHTML = `Movimientos: <br><strong>${movesList}</strong>`;
-                }               
+                    const movesList = data.moves.map((move, index) => `${index + 1}. ${move.move.name}`).join("<br>");
+                    p.innerHTML = `
+                        <div class="moves-container">
+                            <strong>${movesList}</strong>
+                        </div>
+                    `;
+                }                          
             });
         });
     });
