@@ -391,3 +391,7 @@ const addEvolutionImage = (pokemonName, imageContainer) => {
     img.classList.add("evolution-gif", "mx-5");
     imageContainer.appendChild(img);
 };
+
+document.querySelector(".like-button").addEventListener("click", function (){
+    document.querySelector(".like-button").classList.toggle("fa-solid");
+});
