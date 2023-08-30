@@ -167,3 +167,11 @@ button{
     font-weight: 500;
 }
 
+.moves-container {
+    max-height: 150px; /* Ajusta esta altura según tus necesidades */
+    overflow-y: auto;
+    border: 1px solid #000;
+    margin: auto; /* Centrado horizontal */
+    width: 55%;
+}
+
